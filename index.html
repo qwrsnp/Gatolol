@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Holaaaaa️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            /* Color de fondo parecido al de tu dibujo */
+            background-color: #fce4ec; 
+        }
+
+        .contenedor-gatito {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contenedor-gatito img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            /* 'cover' para que no queden bordes, 'contain' para ver el dibujo entero */
+            object-fit: contain; 
+            transition: opacity 0.8s ease-in-out;
+            pointer-events: none;
+        }
+
+        /* Capas */
+        .sin-flor {
+            z-index: 1;
+            opacity: 1;
+        }
+
+        .con-flor {
+            z-index: 2;
+            opacity: 0;
+        }
+
+        /* El cambio cuando ella toca */
+        .active .con-flor {
+            opacity: 1;
+        }
+
+        /* Texto flotante */
+        .instrucciones {
+            position: absolute;
+            bottom: 10%;
+            width: 100%;
+            text-align: center;
+            font-family: 'Comic Sans MS', sans-serif; /* Algo más tierno */
+            color: #d81b60;
+            z-index: 10;
+            font-size: 1.2rem;
+            text-shadow: 1px 1px 2px white;
+        }
+    </style>
+</head>
+<body onclick="toggleMichi()">
+
+    <div class="instrucciones">Tocá al michi</div>
+
+    <div class="contenedor-gatito" id="main-container">
+        <img src="gato_sin_flor.png" class="sin-flor" id="img1">
+        <img src="gato_con_flor.png" class="con-flor" id="img2">
+    </div>
+<audio id="sonidoBrillitos" src="brillitos.mp3"></audio>
+
+    <script>
+        const audio = document.getElementById('sonidoBrillitos');
+        const container = document.getElementById('main-container');
+
+        function toggleMichi() {
+            // Cambia la imagen
+            container.classList.toggle('active');
+
+            // Si se activó la flor (clase active presente), suena el brillito
+            if (container.classList.contains('active')) {
+                audio.currentTime = 0; // Reinicia el audio si toca rápido
+                audio.play().catch(error => console.log("El navegador bloqueó el audio: ", error));
+            }
+        }
+    </script>
+</body>
+</html>
